@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Target, TrendingDown, Wallet } from "lucide-react";
 import { useState, useMemo } from "react";
-import type { SpendingLimit } from "@/types/budget";
+import type { SpendingLimit, BudgetStatus, Budget } from "@/types/budget";
 
 export default function BudgetsPage() {
     const budgets = useBudgetStore((state) => state.budgets);
@@ -28,7 +28,7 @@ export default function BudgetsPage() {
             // For now, return dummy data - will be calculated from transactions later
             const currentSpend = 0;
             const percentUsed = 0;
-            const remaining = limit.amount;
+            const remaining = limit.limit;
 
             return {
                 ...limit,
@@ -39,6 +39,56 @@ export default function BudgetsPage() {
         });
     }, [limits]);
 
+    // Transform budgets into budget statuses
+    const budgetStatuses = useMemo(() => {
+        return budgets.map(budget => {
+            // For now, return dummy data - will be calculated from transactions later
+            const currentSpend = 0;
+            const percentUsed = 0;
+            const remaining = budget.monthlyLimit;
+            const projectedEndOfMonth = 0;
+            const status: "on_track" | "warning" | "exceeded" = "on_track";
+
+            const budgetStatus: BudgetStatus = {
+                budget,
+                currentSpend,
+                percentUsed,
+                remaining,
+                projectedEndOfMonth,
+                status
+            };
+
+            return budgetStatus;
+        });
+    }, [budgets]);
+
+    // Transform goals with calculated properties
+    const goalsWithProgress = useMemo(() => {
+        return goals.map(goal => {
+            // For now, return dummy data - will be calculated from transactions later
+            const currentAmount = 0;
+            const remaining = goal.targetAmount - currentAmount;
+            const percentComplete = (currentAmount / goal.targetAmount) * 100;
+
+            const now = new Date();
+            const deadline = new Date(goal.deadline);
+            const monthsRemaining = Math.max(0, Math.ceil((deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24 * 30)));
+
+            const requiredMonthlySavings = monthsRemaining > 0 ? remaining / monthsRemaining : remaining;
+            const onTrack = true; // Will be calculated based on actual savings rate
+
+            return {
+                ...goal,
+                currentAmount,
+                percentComplete,
+                remaining,
+                monthsRemaining,
+                requiredMonthlySavings,
+                onTrack
+            };
+        });
+    }, [goals]);
+
     const handleCreateLimit = (limitData: Omit<SpendingLimit, "id" | "createdAt">) => {
         const newLimit: SpendingLimit = {
             ...limitData,
@@ -46,6 +96,12 @@ export default function BudgetsPage() {
             createdAt: new Date(),
         };
         addSpendingLimit(newLimit);
+    };
+
+    const handleSaveBudget = (budgetData: Omit<Budget, "id" | "createdAt" | "updatedAt"> | Partial<Budget>) => {
+        // This will be implemented with proper budget creation/update logic
+        console.log("Save budget:", budgetData);
+        setShowBudgetEditor(false);
     };
 
     return (
@@ -139,8 +195,8 @@ export default function BudgetsPage() {
                     </Card>
                 ) : (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {budgets.map((budget) => (
-                            <BudgetCard key={budget.id} budget={budget} />
+                        {budgetStatuses.map((budgetStatus) => (
+                            <BudgetCard key={budgetStatus.budget.id} budgetStatus={budgetStatus} />
                         ))}
                     </div>
                 )}
@@ -192,7 +248,7 @@ export default function BudgetsPage() {
                     </Card>
                 ) : (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {goals.map((goal) => (
+                        {goalsWithProgress.map((goal) => (
                             <SavingsGoalCard key={goal.id} goal={goal} />
                         ))}
                     </div>
@@ -201,7 +257,11 @@ export default function BudgetsPage() {
 
             {/* Modals */}
             {showBudgetEditor && (
-                <BudgetEditor onClose={() => setShowBudgetEditor(false)} />
+                <BudgetEditor
+                    tags={tags}
+                    onSave={handleSaveBudget}
+                    onCancel={() => setShowBudgetEditor(false)}
+                />
             )}
         </div>
     );

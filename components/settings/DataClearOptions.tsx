@@ -198,10 +198,10 @@ export function DataClearOptions() {
                             </div>
                         </div>
                         <Button
-                            variant="destructive"
+                            variant="default"
                             onClick={() => setShowClearAllDialog(true)}
                             disabled={isClearing}
-                            className="w-full"
+                            className="w-full bg-red-600 hover:bg-red-700 text-white dark:bg-red-600 dark:hover:bg-red-700"
                         >
                             <Trash2 className="mr-2 h-4 w-4" />
                             Clear All Data

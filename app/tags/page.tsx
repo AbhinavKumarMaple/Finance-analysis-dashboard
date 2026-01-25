@@ -41,6 +41,7 @@ export default function TagsPage() {
             updatedAt: new Date(),
         };
         addTag(newTag);
+        setShowTagEditor(false);
     };
 
     const totalTagged = transactions.filter((t) => t.tagIds.length > 0).length;
@@ -207,7 +208,12 @@ export default function TagsPage() {
             )}
 
             {/* Tag Editor Modal */}
-            {showTagEditor && <TagEditor onClose={() => setShowTagEditor(false)} />}
+            {showTagEditor && (
+                <TagEditor
+                    onSave={handleCreateTag}
+                    onCancel={() => setShowTagEditor(false)}
+                />
+            )}
 
             {/* Help Section */}
             <Card className="mt-6">
