@@ -1,13 +1,13 @@
 "use client";
 
 import { TrendingUp, TrendingDown, HelpCircle } from "lucide-react";
-import { useTransactionStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { calculateBalanceMetrics } from "@/lib/analytics/balance";
 import { useMemo } from "react";
 import { Tooltip } from "../ui/tooltip";
 
 export function BalanceCard() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     const metrics = useMemo(() => {
         if (transactions.length === 0) {

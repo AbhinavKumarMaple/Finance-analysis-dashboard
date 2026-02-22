@@ -17,6 +17,7 @@ const defaultPreferences: UserPreferences = {
   widgetLayout: [],
   lowBalanceThreshold: 10000,
   enableEncryption: false,
+  globalDateRange: { start: null, end: null },
 };
 
 /**
@@ -56,6 +57,12 @@ interface PreferencesState {
 
   // Security
   setEnableEncryption: (enabled: boolean) => void;
+
+  // Global date range
+  setGlobalDateRange: (range: {
+    start: string | null;
+    end: string | null;
+  }) => void;
 
   // Loading state
   setLoading: (loading: boolean) => void;
@@ -216,6 +223,16 @@ export const usePreferencesStore = create<PreferencesState>()(
             }),
             false,
             "setEnableEncryption",
+          ),
+
+        // Global date range
+        setGlobalDateRange: (globalDateRange) =>
+          set(
+            (state) => ({
+              preferences: { ...state.preferences, globalDateRange },
+            }),
+            false,
+            "setGlobalDateRange",
           ),
 
         // Loading state

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTransactionStore } from "@/store/transactionStore";
 import { useTagStore } from "@/store/tagStore";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import TransactionList from "@/components/transactions/TransactionList";
 import SearchBar from "@/components/transactions/SearchBar";
 import FilterPanel from "@/components/transactions/FilterPanel";
@@ -11,7 +11,7 @@ import type { Transaction } from "@/types/transaction";
 
 export default function TransactionsPage() {
     const searchParams = useSearchParams();
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const tags = useTagStore((state) => state.tags);
 
     const [searchQuery, setSearchQuery] = useState("");

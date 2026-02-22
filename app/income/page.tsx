@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useTransactionStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { analyzeIncome } from "@/lib/analytics/income";
 import { IncomeTrendChart } from "@/components/charts/IncomeTrendChart";
 import {
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 export default function IncomePage() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     const incomeAnalysis = useMemo(() => {
         if (transactions.length === 0) {

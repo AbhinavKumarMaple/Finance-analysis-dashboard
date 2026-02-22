@@ -1,9 +1,10 @@
 "use client";
 
-import { Settings as SettingsIcon, Palette, Database, Shield } from "lucide-react";
+import { Settings as SettingsIcon, Palette, Database, Shield, Calendar } from "lucide-react";
 import { ThemeToggle } from "@/components/settings/ThemeToggle";
 import { StorageManager } from "@/components/settings/StorageManager";
 import { DataClearOptions } from "@/components/settings/DataClearOptions";
+import { GlobalDateRange } from "@/components/settings/GlobalDateRange";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SettingsPage() {
@@ -47,6 +48,17 @@ export default function SettingsPage() {
                     </div>
                     <StorageManager />
                 </div>
+            </div>
+
+            {/* Global Date Range Section */}
+            <div className="space-y-6">
+                <div className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        Data Range
+                    </h2>
+                </div>
+                <GlobalDateRange />
             </div>
 
             {/* Privacy Section */}

@@ -2,7 +2,8 @@
 
 import { TagManager } from "@/components/tags/TagManager";
 import { TagEditor } from "@/components/tags/TagEditor";
-import { useTagStore, useTransactionStore } from "@/store";
+import { useTagStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Tag as TagIcon, Sparkles } from "lucide-react";
@@ -14,7 +15,7 @@ export default function TagsPage() {
     const addTag = useTagStore((state) => state.addTag);
     const updateTag = useTagStore((state) => state.updateTag);
     const deleteTag = useTagStore((state) => state.deleteTag);
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const [showTagEditor, setShowTagEditor] = useState(false);
 
     // Calculate tag usage statistics

@@ -1,15 +1,15 @@
 "use client";
 
-import { useTransactionStore } from "@/store/transactionStore";
 import { useTagStore } from "@/store/tagStore";
 import { useBudgetStore } from "@/store/budgetStore";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { SpendingPatterns } from "@/components/insights/SpendingPatterns";
 import { RecurringPayments } from "@/components/insights/RecurringPayments";
 import { LifestyleMetrics } from "@/components/insights/LifestyleMetrics";
 import { HealthScoreGauge } from "@/components/insights/HealthScoreGauge";
 
 export default function InsightsPage() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const tags = useTagStore((state) => state.tags);
     const budgets = useBudgetStore((state) => state.budgets);
 

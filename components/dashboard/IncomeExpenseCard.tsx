@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowUpCircle, ArrowDownCircle, TrendingUp, HelpCircle } from "lucide-react";
-import { useTransactionStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { useMemo } from "react";
 import { Tooltip } from "../ui/tooltip";
 
 export function IncomeExpenseCard() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     const summary = useMemo(() => {
         const totalIncome = transactions.reduce(

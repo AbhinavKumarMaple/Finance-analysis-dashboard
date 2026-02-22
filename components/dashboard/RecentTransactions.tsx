@@ -1,12 +1,12 @@
 "use client";
 
-import { useTransactionStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { useMemo } from "react";
 import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 import Link from "next/link";
 
 export function RecentTransactions() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     const recentTransactions = useMemo(() => {
         return [...transactions]
@@ -66,8 +66,8 @@ export function RecentTransactions() {
                         <div className="flex items-center gap-3">
                             <div
                                 className={`rounded-full p-2 ${transaction.type === "credit"
-                                        ? "bg-green-100 dark:bg-green-950"
-                                        : "bg-red-100 dark:bg-red-950"
+                                    ? "bg-green-100 dark:bg-green-950"
+                                    : "bg-red-100 dark:bg-red-950"
                                     }`}
                             >
                                 {transaction.type === "credit" ? (
@@ -90,8 +90,8 @@ export function RecentTransactions() {
                         <div className="text-right">
                             <p
                                 className={`text-sm font-semibold ${transaction.type === "credit"
-                                        ? "text-green-600 dark:text-green-400"
-                                        : "text-red-600 dark:text-red-400"
+                                    ? "text-green-600 dark:text-green-400"
+                                    : "text-red-600 dark:text-red-400"
                                     }`}
                             >
                                 {transaction.type === "credit" ? "+" : "-"}

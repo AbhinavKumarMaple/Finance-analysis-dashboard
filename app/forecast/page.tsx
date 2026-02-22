@@ -1,11 +1,11 @@
 "use client";
 
-import { useTransactionStore } from "@/store/transactionStore";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { BalanceForecast } from "@/components/forecast/BalanceForecast";
 import { CashFlowProjection } from "@/components/forecast/CashFlowProjection";
 
 export default function ForecastPage() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     return (
         <div className="space-y-6">

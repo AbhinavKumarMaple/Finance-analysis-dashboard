@@ -1,6 +1,7 @@
 "use client";
 
-import { useTransactionStore, useBudgetStore } from "@/store";
+import { useBudgetStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { useMemo } from "react";
 import {
     AlertTriangle,
@@ -13,7 +14,7 @@ import { detectAnomalies } from "@/lib/analytics/anomalies";
 import type { Alert } from "@/types/analytics";
 
 export function AlertsCard() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const budgets = useBudgetStore((state) => state.budgets);
 
     const alerts = useMemo(() => {

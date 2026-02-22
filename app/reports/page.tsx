@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useTransactionStore } from "@/store/transactionStore";
 import { useTagStore } from "@/store/tagStore";
 import { useBudgetStore } from "@/store/budgetStore";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { MonthlyReport } from "@/components/reports/MonthlyReport";
 import { YearlyReport } from "@/components/reports/YearlyReport";
 import { ExportButtons } from "@/components/reports/ExportButtons";
@@ -13,7 +13,7 @@ import { getAvailableMonths } from "@/lib/reports/monthly";
 import { getAvailableYears } from "@/lib/reports/yearly";
 
 export default function ReportsPage() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const tags = useTagStore((state) => state.tags);
     const budgets = useBudgetStore((state) => state.budgets);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useTransactionStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { calculateCashFlow } from "@/lib/analytics/cashflow";
 import { CashFlowChart } from "@/components/charts/CashFlowChart";
 import { TrendingUp, TrendingDown, DollarSign } from "lucide-react";
@@ -10,7 +10,7 @@ type Granularity = "daily" | "weekly" | "monthly";
 
 export default function CashFlowPage() {
     const [granularity, setGranularity] = useState<Granularity>("monthly");
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
 
     const cashFlowData = useMemo(() => {
         if (transactions.length === 0) {

@@ -1,14 +1,15 @@
 "use client";
 
 import { useMemo } from "react";
-import { useTransactionStore, useTagStore } from "@/store";
+import { useTagStore } from "@/store";
+import { useFilteredTransactions } from "@/hooks/useFilteredTransactions";
 import { calculateSpendingBreakdown } from "@/lib/analytics/spending";
 import { SpendingPieChart } from "@/components/charts/SpendingPieChart";
 import { TopMerchantsChart } from "@/components/charts/TopMerchantsChart";
 import { PieChart, TrendingDown } from "lucide-react";
 
 export default function SpendingPage() {
-    const transactions = useTransactionStore((state) => state.transactions);
+    const transactions = useFilteredTransactions();
     const tags = useTagStore((state) => state.tags);
 
     const spendingData = useMemo(() => {

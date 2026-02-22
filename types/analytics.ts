@@ -316,6 +316,7 @@ export interface UserPreferences {
   widgetLayout: WidgetLayout[];
   lowBalanceThreshold: number;
   enableEncryption: boolean;
+  globalDateRange: { start: string | null; end: string | null };
 }
 
 /**
